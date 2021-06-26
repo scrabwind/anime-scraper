@@ -5,3 +5,25 @@
 	min-height: 200px;
 	height: 40vh;
 }
+.titleLabel {
+	background-color: white;
+	padding-right: 10px;
+	font-weight: bold;
+}
+.modalBody {
+	margin: 10px 20px 10px 20px;
+}
+.title {
+	display: grid;
+	grid-template-columns: 1fr 100%;
+}
+.download {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	row-gap: 1em;
+	min-height: 35%;
+}
+.modalHeader {
+	justify-content: center;
+}

@@ -15,31 +15,29 @@ import {
 	NavbarText,
 } from 'reactstrap'
 
-export const Navigation: React.FC = () => {
+export const Navigation: React.FC = (props: any) => {
 	const [isOpen, setIsOpen] = useState(false)
 
 	const toggle = () => setIsOpen(!isOpen)
 
 	return (
-		<div>
-			<Navbar color="light" light expand="md">
-				<NavbarBrand href="/">dUwUloader</NavbarBrand>
-				<NavbarToggler onClick={toggle} className="mr-2" />
-				<Collapse isOpen={isOpen} navbar>
-					<Nav className="ml-auto" navbar>
-						<NavItem>
-							<NavLink tag={RRNavLink} to="/list">
-								Anime list
-							</NavLink>
-						</NavItem>
-						<NavItem>
-							<NavLink tag={RRNavLink} to="/downloaded">
-								Downloaded anime
-							</NavLink>
-						</NavItem>
-					</Nav>
-				</Collapse>
-			</Navbar>
-		</div>
+		<Navbar color="light" light expand="md" style={{ marginLeft: 10 }}>
+			<NavbarBrand href="/">dUwUloader</NavbarBrand>
+			<NavbarToggler onClick={toggle} className="mr-2" />
+			<Collapse isOpen={isOpen} navbar>
+				<Nav className="ml-auto" navbar>
+					<NavItem>
+						<NavLink tag={RRNavLink} to="/list">
+							Anime list
+						</NavLink>
+					</NavItem>
+					<NavItem>
+						<NavLink tag={RRNavLink} to="/downloaded">
+							Downloaded anime
+						</NavLink>
+					</NavItem>
+				</Nav>
+			</Collapse>
+		</Navbar>
 	)
 }

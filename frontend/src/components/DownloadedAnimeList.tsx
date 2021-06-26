@@ -4,23 +4,24 @@ import { ListGroup, ListGroupItem, Spinner } from 'reactstrap'
 import styles from '../styles/AnimeList.module.scss'
 import { DownloadModal } from './DownloadAnimeModal'
 import { SearchBar } from './SearchBar'
-// import { VariableSizeGrid as Grid } from 'react-window'
-// import { GridList, GridListTile, GridListTileBar } from '@material-ui/core'
 
-export interface IAnime {
+export interface IDownloadedAnime {
 	id: any
 	title: string
 	episode_count: number
 	anime_url: string
 	count: number
 }
-const animeList: IAnime[] = []
-
-export const AnimeList: React.FC = () => {
-	const [list, setList]: [IAnime[], (list: IAnime[]) => void] =
-		useState(animeList)
-	const [flitredList, setFiltredList]: [IAnime[], (list: IAnime[]) => void] =
-		useState(animeList)
+const animeList: IDownloadedAnime[] = []
+export const DownloadedAnimeList: React.FC = () => {
+	const [list, setList]: [
+		IDownloadedAnime[],
+		(list: IDownloadedAnime[]) => void
+	] = useState(animeList)
+	const [filteredList, setFiltredList]: [
+		IDownloadedAnime[],
+		(list: IDownloadedAnime[]) => void
+	] = useState(animeList)
 	const [modal, setModal] = useState<boolean[]>([])
 	const handleModal = (index: number): void => {
 		setModal(prevState => {
@@ -32,13 +33,13 @@ export const AnimeList: React.FC = () => {
 	const handleSearch = (event: any): void => {
 		let value = event.target.value
 		let result = []
-		result = list.filter((data: IAnime) => {
+		result = list.filter((data: IDownloadedAnime) => {
 			const title = data.title.toLowerCase()
 			return title.search(value) != -1
 		})
 		setFiltredList(result)
 	}
-	const mapList = flitredList.map((anime, index) => {
+	const mapList = filteredList.map((anime, index) => {
 		return (
 			<ListGroupItem
 				tag="button"
@@ -62,7 +63,7 @@ export const AnimeList: React.FC = () => {
 
 	useEffect(() => {
 		axios
-			.get<IAnime[]>('/api/animes/')
+			.get<IDownloadedAnime[]>('/api/animes/')
 			.then(res => {
 				setList(res.data)
 				setFiltredList(res.data)
@@ -77,15 +78,8 @@ export const AnimeList: React.FC = () => {
 
 	if (list.length) {
 		isLoaded = (
-			// <GridList cols={3}>
-			// 	{list.map((item, index) => (
-			// 		<GridListTile key={item.id}>
-			// 			<GridListTileBar title={item.title}></GridListTileBar>
-			// 		</GridListTile>
-			// 	))}
-			// </GridList>
 			<div style={{ flex: 1 }}>
-				<SearchBar onChange={(e: any) => handleSearch(e)} />
+				<SearchBar onChange={e => handleSearch(e)} />
 				<ListGroup className={styles.list} key="id">
 					{mapList}
 				</ListGroup>

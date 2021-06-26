@@ -3,12 +3,20 @@ from scrapy.utils.project import get_project_settings
 import csv
 from time import time
 from multiprocessing import Pool
+from argparse import ArgumentParser
+
+parser = ArgumentParser()
+parser.add_argument('--ran', type=int, nargs=2)
+parser.add_argument('--url', type=ascii, nargs=1)
+args = vars(parser.parse_args())
+url_list = args['url'][0]
+ran = args['ran']
 
 
 def preFetch():
     process = CrawlerProcess(get_project_settings())
     process.crawl('anime_list',
-                  url='https://www1.animeshow.tv/Tokyo-Revengers/')
+                  url=url_list)
     process.start()
 
 
@@ -28,6 +36,7 @@ if __name__ == "__main__":
         for url in csv:
             urls.append(url[0])
         urls.reverse()
+        urls = urls[ran[0]-1:ran[1]]
     try:
         p = Pool(processes=None, maxtasksperchild=1)
         p.map_async(download, urls)

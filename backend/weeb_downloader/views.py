@@ -3,8 +3,8 @@ from rest_framework import viewsets
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.filters import OrderingFilter
-from .serializers import AnimeSerializer
-from .models import Anime
+from .serializers import AnimeSerializer, DownloadedAnimeSerializer
+from .models import Anime, DownloadedAnime
 from .filters import CaseInsensitiveOrderingFilter
 from django.db.models import Count
 import json
@@ -30,3 +30,14 @@ class AnimeView(viewsets.ModelViewSet):
         response = super().list(self, request, *args, **kwargs)
         response.data[-1]['count'] = Anime.objects.count()
         return response
+
+
+class DownloadedAnimeView(viewsets.ModelViewSet):
+    serializer_class = DownloadedAnimeSerializer
+
+    def get_queryset(self):
+        queryset = DownloadedAnime.objects.all()
+        anime = self.request.query_params.get('anime')
+        if anime is not None:
+            queryset = queryset.filter(anime=anime)
+        return queryset

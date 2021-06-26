@@ -20,6 +20,8 @@ from weeb_downloader import views
 
 router = routers.DefaultRouter()
 router.register(r'animes', views.AnimeView, 'anime')
+router.register(r'downloadedAnimes',
+                views.DownloadedAnimeView, 'downloadedAnime')
 
 urlpatterns = [
     path('admin/', admin.site.urls),

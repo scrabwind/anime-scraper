@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'corsheaders',
     'rest_framework',
-    'weeb_downloader'
+    'weeb_downloader',
 ]
 
 MIDDLEWARE = [
